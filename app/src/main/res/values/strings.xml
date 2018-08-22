@@ -3,5 +3,7 @@
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         AIzaSyAceUwEApjG0CJEKagezhIEuKjVhkRNXHM</string>
+    <string name="hint">specify distance (in meters)</string>
+    <string name="track">TRACK DISTANCE</string>
 
 </resources>

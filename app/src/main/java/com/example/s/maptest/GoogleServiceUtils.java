@@ -11,17 +11,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
-public class GooglePlayUtils {
+public class GoogleServiceUtils {
 
 
-    private static Boolean mLocationPermissionGranted = false;
+    public static Boolean mLocationPermissionGranted = false;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
     public static boolean isGoogleServiceAvailable(Context context) {
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
@@ -67,22 +66,22 @@ public class GooglePlayUtils {
                                            OnMapReadyCallback readyCallback) {
         mLocationPermissionGranted = false;
         switch (requestCode) {
-            case GooglePlayUtils.LOCATION_PERMISSION_REQUEST_CODE: {
+            case GoogleServiceUtils.LOCATION_PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0) {
                     for (int i = 0; i < grantResults.length; i++) {
                         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            GooglePlayUtils.mLocationPermissionGranted = false;
+                            GoogleServiceUtils.mLocationPermissionGranted = false;
                             break;
                         }
                     }
-                    GooglePlayUtils.mLocationPermissionGranted = true;
+                    GoogleServiceUtils.mLocationPermissionGranted = true;
                     initMap(supportMapFragment, readyCallback);
                 }
             }
         }
     }
 
-    private static void initMap(SupportMapFragment supportMapFragment, OnMapReadyCallback readyCallback) {
+    public static void initMap(SupportMapFragment supportMapFragment, OnMapReadyCallback readyCallback) {
         //  SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(readyCallback);
     }

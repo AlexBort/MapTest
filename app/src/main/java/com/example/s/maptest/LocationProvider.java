@@ -78,9 +78,11 @@ public class LocationProvider implements
     public void onConnected(@Nullable Bundle bundle) {
         Log.e(TAG, "Location services connected.");
 
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+       /* if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(mContext,
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "onConnected: "+ "NOT SUCCESS!!" );
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -89,11 +91,13 @@ public class LocationProvider implements
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             return;
-        }
+        }*/
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
+            Log.e(TAG, "onConnected: "+ "init location");
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         } else {
+            Log.e(TAG, "onConnected: "+ "work with location");
             mLocationCallback.handleNewLocation(location);
         }
     }

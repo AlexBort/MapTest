@@ -15,9 +15,4 @@ public interface MainContract {
     interface MainView {
 
     }
-
-    // TODO: 24.08.2018 не знаю, насколько это вообще good practice (наверное лучше все таки использовать handler!!)
-//    interface Callback {
-//        void f();
-//    }
-}
+    }

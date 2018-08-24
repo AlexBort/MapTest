@@ -29,9 +29,6 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         this.context = context;
     }
 
-//    public LatLng passLatLng(LatLng latLng) {
-//        return latLng;
-//    }
 
     @Override
     public void clickTrackDistance(Location location, String meters) {
@@ -40,20 +37,7 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         Toast.makeText(context, meters, Toast.LENGTH_SHORT).show();
         mLocation = location;
         Utils.startService(context);
-        // SUCCESS: у меня есть текущая локация!!
-        // от это локации считать DISTANCE в любою из сторон!!
 
-
-     /*   if (checkClick) {
-        }*/
-        // надо будет понять, какие ВХОДЯЩИЕ ПАРАМЕТРЫ я буду принимать для расчета дистнции
-        // для расчета можно использовать еще какой-то Utils
-        // здесь же вызовем Service
-
-
-        //   LatLng latLng = passLatLng(null);
-
-        // вызовем в конце notification
     }
 
 //    private void trackDistance(String metersStr) {
@@ -64,7 +48,6 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
 //            if (latLng == meters) {
 //                Notification
 //                return;
-//                // TODO: 24.08.2018 СПРОСИТЬ, С ЧЕГО НАЧАТЬ!!!
 //            }
 //        }
 //    }

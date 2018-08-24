@@ -9,7 +9,7 @@ public interface MainContract {
     interface MainPresenter {
         void trackDistance(Location location/*boolean checkClick*/);
 
-        LatLng passLatLng(LatLng latLng);
+      //  LatLng passLatLng(LatLng latLng);
     }
 
     interface MainView {

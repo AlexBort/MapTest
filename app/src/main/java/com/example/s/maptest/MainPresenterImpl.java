@@ -32,7 +32,13 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
 
     @Override
     public void trackDistance(Location location) {
-        Log.e(TAG, "track latitude: " + String.valueOf(location.getLatitude()));
+
+        LatLng latLng = Utils.convertToLatLng(location);
+
+        // SUCCESS: у меня есть текущая локация!!
+        // от это локации считать DISTANCE в любою из сторон!!
+
+
      /*   if (checkClick) {
         }*/
         // надо будет понять, какие ВХОДЯЩИЕ ПАРАМЕТРЫ я буду принимать для расчета дистнции
@@ -45,8 +51,5 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         // вызовем в конце notification
     }
 
-    @Override
-    public LatLng passLatLng(LatLng latLng) {
-        return null;
-    }
+
 }

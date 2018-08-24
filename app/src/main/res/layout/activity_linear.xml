@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/root_linear"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -18,12 +19,14 @@
             android:id="@+id/edit_distance"
             android:layout_width="match_parent"
             android:layout_marginBottom="5dp"
+            android:inputType="number"
             android:layout_height="wrap_content"
             android:hint="@string/hint" /><!-- android:layout_below="@+id/map"-->
 
         <Button
             android:id="@+id/track"
             android:layout_width="match_parent"
+            android:onClick="trackDistance"
             android:layout_height="wrap_content"
             android:text="@string/track" /><!-- android:layout_below="@+id/edit_distance"-->
 

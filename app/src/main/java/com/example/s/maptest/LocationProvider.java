@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 public class LocationProvider implements
         GoogleApiClient.ConnectionCallbacks,
@@ -39,7 +40,6 @@ public class LocationProvider implements
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-
 
 
     public LocationProvider(Context context, LocationCallback callback) {
@@ -78,11 +78,9 @@ public class LocationProvider implements
     public void onConnected(@Nullable Bundle bundle) {
         Log.e(TAG, "Location services connected.");
 
-       /* if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(mContext,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.e(TAG, "onConnected: "+ "NOT SUCCESS!!" );
+        // TODO: 24.08.2018 правильно ли все таки, что я сделал эту проверку?!?! но благодаря этому приложение перестало падать!!
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -91,13 +89,16 @@ public class LocationProvider implements
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             return;
-        }*/
+        }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
-            Log.e(TAG, "onConnected: "+ "init location");
+            Log.e(TAG, "onConnected: " + "init location");
+
+            // FIXME: 24.08.2018 error: Client must have ACCESS_FINE_LOCATION permission to request PRIORITY_HIGH_ACCURACY locations.
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
         } else {
-            Log.e(TAG, "onConnected: "+ "work with location");
+            Log.e(TAG, "onConnected: " + "work with location");
             mLocationCallback.handleNewLocation(location);
         }
     }

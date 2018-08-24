@@ -42,8 +42,6 @@ public class DistanceService extends Service {
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Log.e(TAG, "onStartCommand: " + "Received Start Foreground Intent");
 
-            //  startPermissionActivity();
-
             showNotification();
             Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
 
@@ -68,11 +66,6 @@ public class DistanceService extends Service {
                 notificationIntent, 0);
 
 
-        // And now, building and attaching the Close button.
-//        Intent buttonCloseIntent = new Intent(this, com.javirock.coolservice.CoolService.class);
-//        buttonCloseIntent.setAction(Constants.ACTION.STOPFOREGROUND_ACTION);
-//        PendingIntent buttonClosePendingIntent = pendingIntent.getService(this, 0, buttonCloseIntent, 0);
-
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle("title")
@@ -85,6 +78,8 @@ public class DistanceService extends Service {
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
+
+        // could work after the killing app
         try {
             Thread.sleep(10000);
             Log.e(TAG, "showNotification: " + "service goes on...");
@@ -107,29 +102,8 @@ public class DistanceService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         // TODO: 25.08.2018  надо понять, надо ли оно здесь
         //    stopSelf();
-    }
-
-
-    class MessageReceiver extends ResultReceiver {
-
-        public MessageReceiver() {
-            super(null);
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            Log.e(TAG, "onReceiveResult: " + " ");
-
-            if (resultCode != RESULT_OK) {
-                return;
-            }
-            String message = resultData.getString(KEY_MESSAGE);
-            Log.e(TAG, "onReceiveResult: " + message);
-        }
-
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.s.maptest;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -15,6 +17,12 @@ public class Utils {
 
     public static LatLng convertToLatLng(Location location) {
         return new LatLng(location.getLatitude(), location.getLongitude());
+    }
+
+    public static void startService(Context context) {
+        Intent intentService = new Intent(context, DistanceService.class);
+        intentService.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+        context.startService(intentService);
     }
 
 }

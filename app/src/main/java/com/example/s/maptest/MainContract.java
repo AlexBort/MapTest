@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 public interface MainContract {
 
     interface MainPresenter {
-        void trackDistance(Location location/*boolean checkClick*/);
+        void clickTrackDistance(Location location, String meters);
 
       //  LatLng passLatLng(LatLng latLng);
     }

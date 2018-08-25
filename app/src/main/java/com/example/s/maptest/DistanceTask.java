@@ -27,7 +27,7 @@ public class DistanceTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        LocationTracker tracker = new LocationTracker(context, Utils.getTrackerSettings(meters)) {
+     /*   LocationTracker tracker = new LocationTracker(context, Utils.getTrackerSettings(meters)) {
             @Override
             public void onLocationFound(@NonNull Location location) {
                 // TODO: 26.08.2018 ПЕРЕДАТЬ НОВУЮ ЛОКАЦИЮ В MAIN_ACTIVITY - отобразить ее на карте!!
@@ -41,14 +41,14 @@ public class DistanceTask extends AsyncTask<Void, Void, Void> {
             }
         };
 
-        tracker.startListening();
+        tracker.startListening(); // FIXME: 26.08.2018 Can't create handler inside thread that has not called Looper.prepare()*/
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        MainPresenterImpl presenter = new MainPresenterImpl();
-        presenter.updateLocation(mLocation);
+        MainPresenterImpl presenter = MainPresenterImpl.getPresenter();
+        presenter.updateLocation(null, "WORK!");
 
     }
 

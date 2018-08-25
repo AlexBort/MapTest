@@ -88,7 +88,10 @@ public class DistanceService extends Service {
             e.printStackTrace();
         }
 
-        trackDistance(meters);
+        //    trackDistance(meters);
+        DistanceTask distanceTask = new DistanceTask(this, meters);
+        distanceTask.execute();
+
         // TODO: 25.08.2018 это когда мы посчитаем необходимое нам расстояние
 //        Notification notifResult = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
 //        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -106,6 +109,7 @@ public class DistanceService extends Service {
                         Toast.LENGTH_SHORT).show();
                 // TODO: 26.08.2018 ПЕРЕДАТЬ НОВУЮ ЛОКАЦИЮ В MAIN_ACTIVITY - отобразить ее на карте!!
                 // и начать расчет дистанции с новой локации!!
+                stopListening();
             }
 
             @Override

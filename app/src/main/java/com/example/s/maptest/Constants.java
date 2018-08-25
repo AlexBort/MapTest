@@ -7,6 +7,8 @@ public interface Constants {
     String TITLE_NOTIF = App.getGlobalContext().getResources().getString(R.string.app_name);
     String DESCRIP_NOTIF = App.getGlobalContext().getResources().getString(R.string.notif_descrip);
 
+    String INTENT_SERVICE_KEY = "distance";
+
     interface ACTION {
         public static String MAIN_ACTION = "com.javirock.coolservice.action.main";
         public static String STARTFOREGROUND_ACTION = "com.javirock.coolservice.action.startforeground";

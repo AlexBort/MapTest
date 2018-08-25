@@ -16,6 +16,11 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     private Location mLocation;
 
 
+    public MainPresenterImpl() {
+
+    }
+
+
     public MainPresenterImpl(MainContract.MainView mainView, Context context) {
         this.mainView = mainView;
         this.context = context;
@@ -34,23 +39,16 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     public void clickTrackDistance(Location location, String meters) {
 
         LatLng latLng = Utils.convertToLatLng(location);
-        Toast.makeText(context, meters, Toast.LENGTH_SHORT).show();
+        //   Toast.makeText(context, meters, Toast.LENGTH_SHORT).show();
         mLocation = location;
-        Utils.startService(context);
+        Utils.startService(context, Float.parseFloat(meters));
 
     }
 
-//    private void trackDistance(String metersStr) {
-//        int meters = Integer.parseInt(metersStr);
-//        LatLng latLng = Utils.convertToLatLng(mLocation);
-//        for (int i = 0; i < meters; i++) {
-//            latLng++;
-//            if (latLng == meters) {
-//                Notification
-//                return;
-//            }
-//        }
-//    }
+    @Override
+    public void updateLocation(Location updateLocation) {
+        mainView.showUpdateLocation();
+    }
 
 
 }

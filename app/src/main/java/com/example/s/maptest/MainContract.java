@@ -9,10 +9,17 @@ public interface MainContract {
     interface MainPresenter {
         void clickTrackDistance(Location location, String meters);
 
-      //  LatLng passLatLng(LatLng latLng);
+        void updateLocation(Location updateLocation);
+        //  LatLng passLatLng(LatLng latLng);
     }
 
     interface MainView {
+        void showUpdateLocation();
+    }
 
+
+    interface Callback {
+        void callBack(float meters);
     }
-    }
+
+}

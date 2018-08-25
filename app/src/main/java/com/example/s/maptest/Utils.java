@@ -24,9 +24,11 @@ public class Utils {
         return new LatLng(location.getLatitude(), location.getLongitude());
     }
 
-    public static void startService(Context context) {
+
+    public static void startService(Context context, float meters) {
         Intent intentService = new Intent(context, DistanceService.class);
         intentService.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+        intentService.putExtra("distance", meters);
         context.startService(intentService);
     }
 
@@ -48,7 +50,7 @@ public class Utils {
                 .setUseGPS(true)
                 .setUseNetwork(true)
                 .setUsePassive(true)
-                .setMetersBetweenUpdates(100);
+                .setMetersBetweenUpdates(meters);
     }
 
 

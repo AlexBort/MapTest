@@ -1,25 +1,18 @@
 package com.example.s.maptest;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import fr.quentinklein.slt.LocationTracker;
-import fr.quentinklein.slt.TrackerSettings;
 
 public class DistanceService extends Service {
 
@@ -30,6 +23,12 @@ public class DistanceService extends Service {
     public static final String KEY_RECEIVER = "KEY_RECEIVER";
     int temp = 0;
 
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
 
     @Nullable
     @Override
@@ -51,8 +50,8 @@ public class DistanceService extends Service {
 //            temp++;
 //            if (temp == 1)
 //                Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
-
-            showNotification();
+            float meters = intent.getFloatExtra(Constants.INTENT_SERVICE_KEY, 0);
+            showNotification(meters);
 
         } else if (intent.getAction().equals(
                 Constants.ACTION.STOPFOREGROUND_ACTION)) {
@@ -65,7 +64,7 @@ public class DistanceService extends Service {
     }
 
     @SuppressLint("MissingPermission")
-    private void showNotification() {
+    private void showNotification(float meters) {
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
@@ -89,10 +88,24 @@ public class DistanceService extends Service {
             e.printStackTrace();
         }
 
-        LocationTracker tracker = new LocationTracker(this, Utils.getTrackerSettings()) {
+        trackDistance(meters);
+        // TODO: 25.08.2018 это когда мы посчитаем необходимое нам расстояние
+//        Notification notifResult = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
+//        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(0, notifResult);
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private void trackDistance(float meters) {
+        LocationTracker tracker = new LocationTracker(this, Utils.getTrackerSettings(meters)) {
             @Override
             public void onLocationFound(@NonNull Location location) {
-
+                Toast.makeText(DistanceService.this,
+                        String.valueOf(location.getLongitude()),
+                        Toast.LENGTH_SHORT).show();
+                // TODO: 26.08.2018 ПЕРЕДАТЬ НОВУЮ ЛОКАЦИЮ В MAIN_ACTIVITY - отобразить ее на карте!!
+                // и начать расчет дистанции с новой локации!!
             }
 
             @Override
@@ -102,12 +115,6 @@ public class DistanceService extends Service {
         };
 
         tracker.startListening();
-
-
-        // TODO: 25.08.2018 это когда мы посчитаем необходимое нам расстояние
-//        Notification notifResult = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
-//        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-//        notificationManager.notify(0, notifResult);
     }
 
 

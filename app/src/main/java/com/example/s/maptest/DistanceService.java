@@ -6,11 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -23,6 +19,7 @@ public class DistanceService extends Service {
     public static final int RESULT_OK = -1;
     public static final String KEY_MESSAGE = "KEY_MESSAGE";
     public static final String KEY_RECEIVER = "KEY_RECEIVER";
+    int temp = 0;
 
 
     @Nullable
@@ -42,8 +39,11 @@ public class DistanceService extends Service {
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Log.e(TAG, "onStartCommand: " + "Received Start Foreground Intent");
 
+//            temp++;
+//            if (temp == 1)
+//                Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
+
             showNotification();
-            Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
 
         } else if (intent.getAction().equals(
                 Constants.ACTION.STOPFOREGROUND_ACTION)) {
@@ -65,20 +65,12 @@ public class DistanceService extends Service {
         PendingIntent pendingIntent = PendingIntent.getService(this, 0,
                 notificationIntent, 0);
 
-
-
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("title")
-                .setTicker("ticker")
-                .setContentText("Content text")
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                /*.addAction(android.R.drawable.ic_menu_close_clear_cancel,"close", buttonClosePendingIntent)*/
-                .build();
+        Notification notification = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
 
+        // TODO: 25.08.2018 потом убрать этот Thread sleep!
         // could work after the killing app
         try {
             Thread.sleep(10000);
@@ -86,17 +78,12 @@ public class DistanceService extends Service {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        Notification notification_ = builder.
-                setContentTitle("new title").
-                setContentText("new content").
-                setTicker("New Message Alert").
-                setSmallIcon(R.mipmap.ic_launcher).
-                setAutoCancel(true).
-                setContentIntent(pendingIntent).build();
 
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification_);
+
+        // TODO: 25.08.2018 это когда мы посчитаем необходимое нам расстояние
+//        Notification notifResult = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
+//        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(0, notifResult);
     }
 
     @Override

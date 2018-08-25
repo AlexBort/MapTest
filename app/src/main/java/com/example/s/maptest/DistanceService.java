@@ -1,16 +1,25 @@
 package com.example.s.maptest;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import fr.quentinklein.slt.LocationTracker;
+import fr.quentinklein.slt.TrackerSettings;
 
 public class DistanceService extends Service {
 
@@ -55,6 +64,7 @@ public class DistanceService extends Service {
         return START_STICKY;
     }
 
+    @SuppressLint("MissingPermission")
     private void showNotification() {
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -79,12 +89,27 @@ public class DistanceService extends Service {
             e.printStackTrace();
         }
 
+        LocationTracker tracker = new LocationTracker(this, Utils.getTrackerSettings()) {
+            @Override
+            public void onLocationFound(@NonNull Location location) {
+
+            }
+
+            @Override
+            public void onTimeout() {
+
+            }
+        };
+
+        tracker.startListening();
+
 
         // TODO: 25.08.2018 это когда мы посчитаем необходимое нам расстояние
 //        Notification notifResult = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
 //        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 //        notificationManager.notify(0, notifResult);
     }
+
 
     @Override
     public void onDestroy() {

@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import fr.quentinklein.slt.TrackerSettings;
+
 public class Utils {
 
     public static void makeSnackbar(View rootView, String message) {
@@ -39,5 +41,15 @@ public class Utils {
                 setContentIntent(pendingIntent).build();
         return notification;
     }
+
+
+    public static TrackerSettings getTrackerSettings(float meters) {
+        return new TrackerSettings()
+                .setUseGPS(true)
+                .setUseNetwork(true)
+                .setUsePassive(true)
+                .setMetersBetweenUpdates(100);
+    }
+
 
 }

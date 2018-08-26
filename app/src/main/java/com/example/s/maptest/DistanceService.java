@@ -79,23 +79,14 @@ public class DistanceService extends Service {
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
 
-        // TODO: 25.08.2018 потом убрать этот Thread sleep!
-        // could work after the killing app
-        try {
-            Thread.sleep(10000);
-            Log.e(TAG, "showNotification: " + "service goes on...");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        trackDistance(meters);
 
         //    trackDistance(meters);
-        DistanceTask distanceTask = new DistanceTask(this, meters);
+        DistanceTask distanceTask = new DistanceTask(this, meters, pendingIntent);
         distanceTask.execute();
 
         // TODO: 25.08.2018 это когда мы посчитаем необходимое нам расстояние
-//        Notification notifResult = Utils.createNotification(this, Constants.TITLE_NOTIF, Constants.DESCRIP_NOTIF, pendingIntent);
-//        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-//        notificationManager.notify(0, notifResult);
+
     }
 
 
@@ -109,7 +100,7 @@ public class DistanceService extends Service {
                         Toast.LENGTH_SHORT).show();
                 // TODO: 26.08.2018 ПЕРЕДАТЬ НОВУЮ ЛОКАЦИЮ В MAIN_ACTIVITY - отобразить ее на карте!!
                 // и начать расчет дистанции с новой локации!!
-                stopListening();
+                //  stopListening();
             }
 
             @Override

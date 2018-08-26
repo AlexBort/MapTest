@@ -6,6 +6,7 @@ public interface Constants {
     String snackMessage = App.getGlobalContext().getResources().getString(R.string.snackbar_text);
     String TITLE_NOTIF = App.getGlobalContext().getResources().getString(R.string.app_name);
     String DESCRIP_NOTIF = App.getGlobalContext().getResources().getString(R.string.notif_descrip);
+    String RESULT_NOTIF = App.getAppResources().getString(R.string.notif_result);
 
     String INTENT_SERVICE_KEY = "distance";
 
